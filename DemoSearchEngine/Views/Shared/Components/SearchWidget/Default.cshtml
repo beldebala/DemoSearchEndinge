@@ -1,0 +1,10 @@
+﻿@model IEnumerable<SearchResult>
+    <div class="container">
+        <h3> @Model.FirstOrDefault().Category </h3>
+        <ul class="list-group">
+            @foreach (var result in Model)
+            {
+                <li class="list-group-item">@result.Name</li>
+            }
+        </ul>
+    </div>
