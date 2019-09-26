@@ -64,33 +64,21 @@ namespace DemoSearchEngine.Services
             List<SearchResult> searchResults = null;
             try
             {
-                var searchResponse = await _elasticClient.SearchAsync<Movie, Theater>(s => s
+                var result = await _elasticClient.SearchAsync<SearchResult>(s => s
                                            .Query(q => q.MatchPhrasePrefix(c => c
-                                                           .Field(p => p.Name)
-                                                           .Analyzer("standard")
-                                                           .Boost(1.1)
-                                                           .Name("named_query")
-                                                           .Query(pattern)
-                                                           
-                                                       ) )
-                                          .Aggregations(
-                                                a => a.Filters("by_category",
-                                                agg => agg.OtherBucket()
-                                                          .OtherBucketKey("other_search_by_category")
-                                                          .NamedFilters(filters => filters
-                                                          .Filter("Movies", f => f.Term(p => p.Category, "Movies"))
-                                                          .Filter("Theaters", f => f.Term(p => p.Category, "Theater")))
-                                                          ))
+                                                        .Field(p => p.Name)
+                                                        .Analyzer("standard")
+                                                        .Boost(1.1)
+                                                        .Query(pattern)
+                                                        .MaxExpansions(2)
+                                                        .Slop(2)
+                                                        .Name("named_query")
+                                                    ))
                                            .Index("_all")
                                         );
 
-                searchResults = searchResponse
-                    .Documents?.Select(x => new SearchResult()
-                    {
-                        Category = "Movies",
-                        Name = x.Name
-                    }).ToList();
-
+                searchResults = result.Documents.ToList<SearchResult>();
+               
             }
             catch (Exception ex)
             {

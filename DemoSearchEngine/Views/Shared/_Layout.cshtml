@@ -42,16 +42,23 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>    
     <script type="text/javascript">
 
         $(document).ready(function () {
-            $("#searchText").keyup(function (e) {
-                var text = document.getElementById('searchText').value
-                $.post("/home/search", { pattern: text }, function (data) {                   
-                    $("#movieList").html(data);
-                })
-            })
+            
+            $("#searchText").keyup(_.debounce(function (e) {                
+                var text = document.getElementById('searchText').value;
+                if (text.length >= 2) {
+                    $.post("/home/search", { pattern: text }, function (data) {
+                        $("#movieList").html(data);
+                    })
+                }
+                else {
+                     $("#movieList").html("");
+                }
+            }, 500))
         })
 
     </script>

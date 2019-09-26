@@ -1,10 +1,19 @@
 ﻿@model IEnumerable<SearchResult>
     <div class="container">
-        <h3> @Model.FirstOrDefault().Category </h3>
-        <ul class="list-group">
-            @foreach (var result in Model)
+        @{
+            var result_by_category = Model.GroupBy(x => x.Category).ToList();
+
+            @foreach (var category in result_by_category)
             {
-                <li class="list-group-item">@result.Name</li>
-            }
-        </ul>
+                <ul class="fan-autocomplete-category">
+                    <h3 class="fan-autocomplete-heading"> @category.Key </h3>
+                    @foreach (var result in category)
+                    {
+                       <li class="fan-autocomplete-item cta">
+                           <a asp-controller="Movie" asp-action="Index" asp-route-id="@result.ID"> @result.Name</a>
+                       </li>
+                    }
+                </ul>
+             }
+         }
     </div>

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace DemoSearchEngine.Enums
 {
-    public enum SearchIndex
+    public enum SearchCategory
     {
-        MovieIndex,
+        Movie = 1,
+        Theater = 2 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DemoSearchEngine.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,6 @@ namespace DemoSearchEngine.Models
 
         public List<TheaterMovies> TheaterMovies{ get; set; }
 
-        public string Category { get; set; }
+        public SearchCategory Category { get; set; }
     }
 }

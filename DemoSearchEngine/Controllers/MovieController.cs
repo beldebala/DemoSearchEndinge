@@ -28,9 +28,23 @@ namespace DemoSearchEngine.Controllers
         [HttpPost("/Movie/Add")]
         public void AddMovie(Movie movie)
         {
-            _repository.AddMovie(movie);
-
-            _searchService.IndexMovieAsync(movie);
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _repository.AddMovie(movie);
+                    _searchService.IndexMovieAsync(movie);
+                }
+                else
+                {
+                    RedirectToAction("Index");
+                }
+            }
+            catch (Exception exception)
+            {
+                //log exception
+            }
+            
         }
     }
 }
