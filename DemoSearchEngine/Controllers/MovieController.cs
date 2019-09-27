@@ -46,5 +46,11 @@ namespace DemoSearchEngine.Controllers
             }
             
         }
+
+        [HttpGet("/Movie/Get")]
+        public IActionResult MovieDetails(int Id)
+        {
+            return ViewComponent("DetailsWidget", Id);
+        }
     }
 }

@@ -1,22 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-    <div class="text-center form-group">
 
-        @{
-            try
-            {
-                <div class="col-md-4">
-                    <input class="form-control" type="text" name="pattern" id="searchText" placeholder="Search by Movie.." />
-                    <div id="movieList">
-                    </div>                    
+    <div class="container">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <input class="form-control" type="text" name="pattern" id="searchText" placeholder="Search by Movie.." />
+                <div id="movieList">
                 </div>
-                
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
+            </div>
+            <div class="col-md-8 .d-flex">
+                @await Component.InvokeAsync("MoviesListWidget")
+            </div>
+        </div>
     </div>
+

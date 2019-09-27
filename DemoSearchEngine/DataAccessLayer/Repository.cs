@@ -36,6 +36,11 @@ namespace DemoSearchEngine.DataAccessLayer
             return _dbContext.Movies?.ToList<Movie>();
         }
 
+        public IAsyncEnumerable<Movie> GetMoviesAsync()
+        {
+            return _dbContext.Movies;
+        }
+
         public List<Theater> GetTheaters()
         {
             return _dbContext.Theaters?.ToList<Theater>();

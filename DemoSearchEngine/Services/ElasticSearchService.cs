@@ -65,8 +65,12 @@ namespace DemoSearchEngine.Services
             try
             {
                 var result = await _elasticClient.SearchAsync<SearchResult>(s => s
-                                           .Query(q => q.MatchPhrasePrefix(c => c
-                                                        .Field(p => p.Name)
+                                           .Query(q => q.MultiMatch(c => c
+                                                        .Fields(
+                                                                fs => fs.Field(f => f.Name)
+                                                                        .Field(f => f.Genre)
+                                                                )
+                                                        .Type(TextQueryType.PhrasePrefix)
                                                         .Analyzer("standard")
                                                         .Boost(1.1)
                                                         .Query(pattern)

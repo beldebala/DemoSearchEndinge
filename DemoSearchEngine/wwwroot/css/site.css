@@ -95,3 +95,12 @@ body {
     color: #4AA7f6;
     transition: color .3s linear;
 }
+
+.thumbnail-dim{
+    width:131px;
+    height:193px;
+}
+
+.release-date {
+    font-size:10px;
+}

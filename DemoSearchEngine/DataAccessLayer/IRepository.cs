@@ -10,6 +10,8 @@ namespace DemoSearchEngine.DataAccessLayer
     {
         List<Movie> GetMovies();
 
+        IAsyncEnumerable<Movie> GetMoviesAsync();
+
         void AddMovie(Movie movie);
 
         List<Theater> GetTheaters();

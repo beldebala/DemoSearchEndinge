@@ -12,5 +12,7 @@ namespace DemoSearchEngine.Models
         public SearchCategory Category { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
+
+        public string Genre { get; set; }
     }
 }

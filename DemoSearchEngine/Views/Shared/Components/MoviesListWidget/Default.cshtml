@@ -1,0 +1,18 @@
+﻿@model IAsyncEnumerable<Movie>
+
+@{
+    IAsyncEnumerator<Movie> enumerator = Model.GetAsyncEnumerator();
+
+    <div class="row .d-flex">
+        @while (await enumerator.MoveNextAsync())
+        {
+
+        <div class="col-md-3">
+            <img class="thumbnail-dim" src="@Url.Content(String.Format("~/Images/{0}.jpg", @enumerator.Current.ID))" />
+            <a asp-controller="Home" asp-action="Details" asp-route-id="@enumerator.Current.ID">@enumerator.Current.Name</a>
+            <h6 class="release-date">@enumerator.Current.ReleaseDate.ToString("D")</h6>
+        </div>
+
+        }
+    </div>
+    }
