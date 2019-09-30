@@ -31,7 +31,7 @@ namespace DemoSearchEngine.Services
             catch (Exception exception)
             {
                 _logger.LogError(exception.Message);
-            }            
+            }
         }
 
         public async Task IndexMovieAsync(Movie movie)
@@ -39,7 +39,7 @@ namespace DemoSearchEngine.Services
             try
             {
                 var bulkIndexResponse = await _elasticClient.IndexAsync(movie, i => i.Index("movieindex"));
-                                                       
+
             }
             catch (Exception exception)
             {
@@ -63,65 +63,17 @@ namespace DemoSearchEngine.Services
         public async Task<Dictionary<string, List<SearchResult>>> GetSearchResultsAsync(string pattern)
         {
             Dictionary<string, List<SearchResult>> keyValuePairs = new Dictionary<string, List<SearchResult>>();
-            List<SearchResult> searchResults = null;
             try
             {
-                //var searchRequest = new SearchRequest<SearchResult>("_all")
-                //{
-                //    Aggregations = new FilterAggregation("my_filter")
-                //    {
-                //         Filter = new TermQuery()
-                //         {
-                //             Field = "name",
-                //             Value = pattern
-                //         },
-                //        Aggregations = new TermsAggregation("by_categories")
-                //        {
-                //            Field = new Field("Category") { },
-
-                //            Aggregations = new TopHitsAggregation("my_top_hits")
-                //            {
-                //                Source = new SourceFilter
-                //                {
-                //                    Includes = new[] { "name", "id", "category" }
-                //                },
-                //                Size = 10
-                //            }
-                //        }
-                //    },
-                //    AllowNoIndices = true
-                //};
-
-                // var searchResponse = await _elasticClient
-                // .SearchAsync<SearchResult>(searchRequest);
-
                 var result = await _elasticClient.SearchAsync<SearchResult>(s => s
-                                        .Aggregations(a => a.Filter("search_filter", f => f.Filter(
-                                            q => q.MultiMatch(c => c
-                                                        .Fields(
-                                                                fs => fs.Field(f => f.Name)
-                                                                        .Field(f => f.Genre)
-                                                                        .Field(f => f.FirstName)
-                                                                        .Field(f => f.LastName)
-                                                                )
-                                                        .Type(TextQueryType.PhrasePrefix)
-                                                        .Analyzer("standard")
-                                                        .Boost(1.1)
-                                                        .Query(pattern)
-                                                        .MaxExpansions(2)
-                                                        .Slop(2)
-                                                        .Name("named_query")))                                        
-                                                    .Aggregations(
-                                                            childaggs => childaggs.Terms("by_categories",
-                                                                                          x => x.Field(p => p.Category).Size(10)
-                                                                                                .Aggregations(th => th.TopHits("top_hits",h => h.Source(s => s.IncludeAll())))
-                                                                                         ))))
-                                           .Index("_all")
-                                        );
+                    .Aggregations(a => a.Filter("search_filter",
+                                            f => f.Filter(MoviesFilter(pattern))
+                                                  .Aggregations(AggregateByCategories())))
+                                        .Index("_all"));
 
                 var filterresults = result.Aggregations.Filter("search_filter");
                 var buckets = filterresults?.Terms("by_categories")?.Buckets;
-               
+
                 foreach (var b in buckets)
                 {
                     var tophits = b.TopHits("top_hits");
@@ -135,9 +87,34 @@ namespace DemoSearchEngine.Services
                 _logger.LogError(ex.Message);
             }
 
-          
+
 
             return keyValuePairs;
+        }
+
+        private static Func<QueryContainerDescriptor<SearchResult>, QueryContainer> MoviesFilter(string pattern)
+        {
+            return q => q.MultiMatch(c => c.Fields(
+                                                                         fs => fs.Field(f => f.Name)
+                                                                                 .Field(f => f.Genre)
+                                                                                 .Field(f => f.FirstName)
+                                                                                 .Field(f => f.LastName)
+                                                                         )
+                                                                 .Type(TextQueryType.PhrasePrefix)
+                                                                 .Analyzer("standard")
+                                                                 .Boost(1.1)
+                                                                 .Query(pattern)
+                                                                 .MaxExpansions(2)
+                                                                 .Slop(2)
+                                                                 .Name("named_query"));
+        }
+
+        private static Func<AggregationContainerDescriptor<SearchResult>, IAggregationContainer> AggregateByCategories()
+        {
+            return childaggs => childaggs.Terms("by_categories",
+                x => x.Field(p => p.Category)
+                      .Size(10)
+                      .Aggregations(th => th.TopHits("top_hits", h => h.Source(s => s.IncludeAll()))));
         }
 
         public async Task IndexTheaterAsync(IEnumerable<Theater> theaters)
@@ -194,12 +171,12 @@ namespace DemoSearchEngine.Services
                                                                                    th => th.Source(
                                                                                        src => src.IncludeAll())))
                                                                )
-                                                          )                                           
+                                                          )
                                            .Index("_all")
                                         );
-                
+
                 buckets = response.Aggregations.Terms("top_tags").Buckets;
-                
+
             }
             catch (Exception ex)
             {
@@ -216,7 +193,7 @@ namespace DemoSearchEngine.Services
 
             }
 
-           return keyValuePairs;            
+            return keyValuePairs;
         }
 
         public async Task IndexLocationsAsync(IEnumerable<Location> locations)
