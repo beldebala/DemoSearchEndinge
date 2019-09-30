@@ -9,19 +9,11 @@
                     <li class="fan-autocomplete-heading card-"> @category.Key </li>
                     @foreach (var result in category.Value)
                     {
-                <li class="fan-autocomplete-item cta card-text">
-                    @if (!string.IsNullOrWhiteSpace(result.Name))
-                    {
-                        <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @result.Name</a>
-                    }
-                    else
-                    {
-                        <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @string.Format("{0} {1}", result.FirstName, @result.LastName) </a>
-                    }
-
-                </li>
+                        <li class="fan-autocomplete-item cta card-text">
+                            <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @result.Name</a>
+                        </li>
                     }
                 </ul>
-             }
-         }
+                }
+            }
     </div>

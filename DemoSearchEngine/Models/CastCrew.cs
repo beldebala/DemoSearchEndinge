@@ -14,6 +14,8 @@ namespace DemoSearchEngine.Models
 
         public string LastName { get; set; }
 
+        public string Name { get { return string.Format("{0} {1}", FirstName, LastName); } }
+
         public float Rating { get; set; }
 
         public List<Movie> Movies { get; set; }

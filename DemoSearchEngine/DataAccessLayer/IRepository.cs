@@ -8,16 +8,16 @@ namespace DemoSearchEngine.DataAccessLayer
 {
     public interface IRepository
     {
-        List<Movie> GetMovies();
+        IEnumerable<Movie> GetMovies();
 
         IAsyncEnumerable<Movie> GetMoviesAsync();
 
         void AddMovie(Movie movie);
 
-        List<Theater> GetTheaters();
+        IEnumerable<Theater> GetTheaters();
 
-        List<Location> GetLocations();
+        IEnumerable<Location> GetLocations();
 
-        List<CastCrew> GetCastCrew();
+        IEnumerable<CastCrew> GetCastCrew();
     }
 }

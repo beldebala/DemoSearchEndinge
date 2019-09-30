@@ -31,19 +31,19 @@ namespace DemoSearchEngine.DataAccessLayer
             }
         }
 
-        public List<CastCrew> GetCastCrew()
+        public IEnumerable<CastCrew> GetCastCrew()
         {
-            return _dbContext.CastCrews?.ToList<CastCrew>();
+            return _dbContext.CastCrews.AsEnumerable();
         }
 
-        public List<Location> GetLocations()
+        public IEnumerable<Location> GetLocations()
         {
-            return _dbContext.Locations?.ToList<Location>();
+            return _dbContext.Locations.AsEnumerable();
         }
 
-        public List<Movie> GetMovies()
+        public IEnumerable<Movie> GetMovies()
         {
-            return _dbContext.Movies?.ToList<Movie>();
+            return _dbContext.Movies.AsEnumerable();
         }
 
         public IAsyncEnumerable<Movie> GetMoviesAsync()
@@ -51,9 +51,9 @@ namespace DemoSearchEngine.DataAccessLayer
             return _dbContext.Movies;
         }
 
-        public List<Theater> GetTheaters()
+        public IEnumerable<Theater> GetTheaters()
         {
-            return _dbContext.Theaters?.ToList<Theater>();
+            return _dbContext.Theaters.AsEnumerable();
         }
     }
 }
