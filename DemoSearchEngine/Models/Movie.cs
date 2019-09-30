@@ -20,6 +20,8 @@ namespace DemoSearchEngine.Models
         public string Genre { get; set; }
         public int Rating { get; set; }
         public List<TheaterMovies> TheaterMovies{ get; set; }
-        public SearchCategory Category { get; set; }        
+        public SearchCategory Category { get; set; }
+
+        public List<CastCrew>  CastCrews { get; set; }
     }
 }

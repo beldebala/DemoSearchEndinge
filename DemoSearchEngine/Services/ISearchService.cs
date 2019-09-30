@@ -9,11 +9,17 @@ namespace DemoSearchEngine.Services
     public interface ISearchService
     {
         Task IndexMovieAsync(IEnumerable<Movie> movies);
-        Task<List<SearchResult>> GetSearchResultsAsync(string pattern);
+        Task<Dictionary<string, List<SearchResult>>> GetSearchResultsAsync5(string pattern);
+
+        Task<Dictionary<string, List<SearchResult>>> GetSearchResultsAsync(string pattern);
         Task IndexMovieAsync(Movie movie);
 
         Task IndexTheaterAsync(Theater theater);
 
         Task IndexTheaterAsync(IEnumerable<Theater> theaters);
+
+        Task IndexLocationsAsync(IEnumerable<Location> locations);
+
+        Task IndexCastCrewAsync(IEnumerable<CastCrew> castCrews);
     }
 }

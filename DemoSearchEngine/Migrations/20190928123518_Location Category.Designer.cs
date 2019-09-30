@@ -4,49 +4,22 @@ using DemoSearchEngine.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DemoSearchEngine.Migrations
 {
     [DbContext(typeof(MoviesDBContext))]
-    partial class MoviesDBContextModelSnapshot : ModelSnapshot
+    [Migration("20190928123518_Location Category")]
+    partial class LocationCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DemoSearchEngine.Models.CastCrew", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MovieID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Rating")
-                        .HasColumnType("real");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("MovieID");
-
-                    b.ToTable("CastCrews");
-                });
 
             modelBuilder.Entity("DemoSearchEngine.Models.Location", b =>
                 {
@@ -64,12 +37,6 @@ namespace DemoSearchEngine.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Street")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("Locations");
@@ -81,9 +48,6 @@ namespace DemoSearchEngine.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CastCrewID")
-                        .HasColumnType("int");
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -106,24 +70,7 @@ namespace DemoSearchEngine.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CastCrewID");
-
                     b.ToTable("Movies");
-                });
-
-            modelBuilder.Entity("DemoSearchEngine.Models.MovieCasts", b =>
-                {
-                    b.Property<int>("CastCrewId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CastCrewId", "MovieId");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("MovieCasts");
                 });
 
             modelBuilder.Entity("DemoSearchEngine.Models.Theater", b =>
@@ -165,35 +112,6 @@ namespace DemoSearchEngine.Migrations
                     b.HasIndex("TheaterId");
 
                     b.ToTable("TheaterMovies");
-                });
-
-            modelBuilder.Entity("DemoSearchEngine.Models.CastCrew", b =>
-                {
-                    b.HasOne("DemoSearchEngine.Models.Movie", null)
-                        .WithMany("CastCrews")
-                        .HasForeignKey("MovieID");
-                });
-
-            modelBuilder.Entity("DemoSearchEngine.Models.Movie", b =>
-                {
-                    b.HasOne("DemoSearchEngine.Models.CastCrew", null)
-                        .WithMany("Movies")
-                        .HasForeignKey("CastCrewID");
-                });
-
-            modelBuilder.Entity("DemoSearchEngine.Models.MovieCasts", b =>
-                {
-                    b.HasOne("DemoSearchEngine.Models.CastCrew", "CastCrew")
-                        .WithMany()
-                        .HasForeignKey("CastCrewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DemoSearchEngine.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DemoSearchEngine.Models.Theater", b =>

@@ -15,5 +15,9 @@ namespace DemoSearchEngine.DataAccessLayer
         void AddMovie(Movie movie);
 
         List<Theater> GetTheaters();
+
+        List<Location> GetLocations();
+
+        List<CastCrew> GetCastCrew();
     }
 }

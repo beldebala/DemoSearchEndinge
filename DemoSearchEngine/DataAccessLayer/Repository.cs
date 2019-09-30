@@ -31,6 +31,16 @@ namespace DemoSearchEngine.DataAccessLayer
             }
         }
 
+        public List<CastCrew> GetCastCrew()
+        {
+            return _dbContext.CastCrews?.ToList<CastCrew>();
+        }
+
+        public List<Location> GetLocations()
+        {
+            return _dbContext.Locations?.ToList<Location>();
+        }
+
         public List<Movie> GetMovies()
         {
             return _dbContext.Movies?.ToList<Movie>();

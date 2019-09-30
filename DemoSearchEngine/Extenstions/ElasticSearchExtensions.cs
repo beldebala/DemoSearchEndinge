@@ -33,6 +33,12 @@ namespace DemoSearchEngine.Extenstions
 
             client.Indices.Create("theaterindex", c => c
                .Map<Theater>(m => m.AutoMap()));
+
+            client.Indices.Create("locationindex", c => c
+               .Map<Location>(m => m.AutoMap()));
+
+            client.Indices.Create("castcrewindex", c => c
+              .Map<CastCrew>(m => m.AutoMap()));
         }
     }
 }

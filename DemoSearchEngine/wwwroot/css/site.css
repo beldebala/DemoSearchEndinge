@@ -79,21 +79,23 @@ body {
 
 .fan-autocomplete-category {
     border-top: 1px solid #CCC;
-    padding: 15px;
+    padding: 15px;    
 }
 
 .fan-autocomplete-heading {
     cursor: default;
     font-family: alternate-gothic-no-1-d,"Futura Condensed","Arial Narrow",Arial,sans-serif;
-    font-size: 26px;
+    font-size: 20px;
     line-height: 1;
     margin-bottom: 5px;
     text-transform: uppercase;
+    list-style-type:none;
 }
 
 .cta {
     color: #4AA7f6;
     transition: color .3s linear;
+    list-style-type:none
 }
 
 .thumbnail-dim{
@@ -103,4 +105,14 @@ body {
 
 .release-date {
     font-size:10px;
+}
+
+.fan-autocomplete-results {
+    z-index: 1;
+}
+
+.fan-autocomplete-results.is-open {
+    max-height: 700px;
+    padding-top: 10px;
+    top: 20px;
 }

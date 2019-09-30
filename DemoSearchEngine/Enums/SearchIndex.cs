@@ -8,6 +8,8 @@ namespace DemoSearchEngine.Enums
     public enum SearchCategory
     {
         Movie = 1,
-        Theater = 2 
+        Theater = 2,
+        Location = 3,
+        Cast = 4
     }
 }

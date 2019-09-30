@@ -35,6 +35,12 @@ namespace DemoSearchEngine.Controllers
             var theaters = _repository.GetTheaters();
             await _searchService.IndexTheaterAsync(theaters);
 
+            var locations = _repository.GetLocations();
+            await _searchService.IndexLocationsAsync(locations);
+
+            var casts = _repository.GetCastCrew();
+            await _searchService.IndexCastCrewAsync(casts);
+
             return View();
         }
 

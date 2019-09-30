@@ -17,5 +17,7 @@ namespace DemoSearchEngine.Models
         public List<TheaterMovies> TheaterMovies{ get; set; }
 
         public SearchCategory Category { get; set; }
+
+        public Location Location { get; set; }
     }
 }

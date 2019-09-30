@@ -1,18 +1,25 @@
-﻿@model IEnumerable<SearchResult>
+﻿@model Dictionary<string, List<SearchResult>>
 
-    <div class="container">
+    <div class="container fan-autocomplete-results is-open">
         @{
-            var result_by_category = Model.GroupBy(x => x.Category).ToList();
 
-            @foreach (var category in result_by_category)
+            @foreach (var category in Model)
             {
-                <ul class="fan-autocomplete-category">
-                    <h3 class="fan-autocomplete-heading"> @category.Key </h3>
-                    @foreach (var result in category)
+                <ul class="fan-autocomplete-category card">
+                    <li class="fan-autocomplete-heading card-"> @category.Key </li>
+                    @foreach (var result in category.Value)
                     {
-                       <li class="fan-autocomplete-item cta">
-                           <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @result.Name</a>
-                       </li>
+                <li class="fan-autocomplete-item cta card-text">
+                    @if (!string.IsNullOrWhiteSpace(result.Name))
+                    {
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @result.Name</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@result.ID"> @string.Format("{0} {1}", result.FirstName, @result.LastName) </a>
+                    }
+
+                </li>
                     }
                 </ul>
              }

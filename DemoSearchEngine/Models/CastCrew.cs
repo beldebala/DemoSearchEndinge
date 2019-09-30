@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace DemoSearchEngine.Models
 {
-    public class SearchResult
+    public class CastCrew
     {
         public int ID { get; set; }
-        public SearchCategory Category { get; set; }        
-        public string Name { get; set; }
-        public string Link { get; set; }
-
-        public string Genre { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public float Rating { get; set; }
+
+        public List<Movie> Movies { get; set; }
+
+        public SearchCategory Category { get; set; }
     }
 }

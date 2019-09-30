@@ -23,7 +23,7 @@ namespace DemoSearchEngine.Views.Components
         {
             // add logic to call IElasticSearchService.GetResults
 
-            var result =  await _searchService.GetSearchResultsAsync(pattern);
+            var result = await _searchService.GetSearchResultsAsync(pattern);
 
             return View(result);
 
